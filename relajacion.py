@@ -27,9 +27,19 @@ def q(i, j, h):
     return output
 
 
-for i in range(1, Np-1):
-    for j in range(1, Np-1):
-        phi_next[i, j] = ((1-W) * phi[i, j] +
-                          W/4 * (phi[i+1, j] + phi_next[i-1, j] +
-                                 phi_next[i, j-1] + phi[i, j+1] +
-                                 h**2 * q(i, j, h)))
+def una_iteracion(phi, phi_next, Np, h, w, q):
+    for i in range(1, Np-1):
+        for j in range(1, Np-1):
+            phi_next[i, j] = ((1-w) * phi[i, j] +
+                              w/4 * (phi[i+1, j] + phi_next[i-1, j] +
+                                     phi_next[i, j-1] + phi[i, j+1] +
+                                     h**2 * q(i, j, h)))
+    pass
+
+
+
+
+una_iteracion(phi, phi_next, Np, h, W, q)
+phi = phi_next
+
+una_iteracion(phi, phi_next, Np, h, W, q)
