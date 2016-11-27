@@ -54,3 +54,15 @@ while contador < N_max_iteraciones and no_ha_convergido(phi, phi_next, eps):
     # from ipdb import set_trace; set_trace()
     una_iteracion(phi, phi_next, Np, h, W, q)
     contador += 1
+
+fig = plt.figure(1)
+fig.clf()
+ax = fig.add_subplot(111, projection='3d')
+
+x = np.linspace(-1, 1, Np)
+y = np.linspace(-1, 1, Np)
+X, Y = np.meshgrid(x, y)
+
+ax.plot_surface(X, Y, phi_next, rstride=1, cstride=1)
+plt.show()
+
