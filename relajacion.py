@@ -64,5 +64,12 @@ y = np.linspace(-1, 1, Np)
 X, Y = np.meshgrid(x, y)
 
 ax.plot_surface(X, Y, phi_next, rstride=1, cstride=1)
+
+fig = plt.figure(2)
+fig.clf()
+ax = fig.add_subplot(111)
+ax.imshow(phi_next, origin='bottom')
+ax.contour(phi_next, origin='lower')
+
 plt.show()
 
