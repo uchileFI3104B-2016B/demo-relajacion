@@ -7,14 +7,16 @@ Descripcion del problema.
 from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import axes3d
 
 # Setup
 LX = 2
 LY = 2
-Np = 5  # numero de puntos para discretizacion
+Np = 21  # numero de puntos para discretizacion
 h = LX / (Np - 1)
 W = 1.
-
+N_max_iteraciones = 60
+eps = 1e-6
 
 phi = np.zeros((Np, Np))
 phi_next = np.zeros((Np, Np))
@@ -37,9 +39,18 @@ def una_iteracion(phi, phi_next, Np, h, w, q):
     pass
 
 
+def no_ha_convergido(phi, phi_next, eps):
+    # from ipdb import set_trace; set_trace()
+    nonzero = phi_next != 0
+    dif_relativa = np.fabs((phi_next - phi)[nonzero] / phi_next[nonzero])
+    max_dif = np.max(dif_relativa)
+    output = max_dif > eps
+    return output
 
-
+contador = 0
 una_iteracion(phi, phi_next, Np, h, W, q)
-phi = phi_next
-
-una_iteracion(phi, phi_next, Np, h, W, q)
+while contador < N_max_iteraciones and no_ha_convergido(phi, phi_next, eps):
+    phi = phi_next.copy()
+    # from ipdb import set_trace; set_trace()
+    una_iteracion(phi, phi_next, Np, h, W, q)
+    contador += 1
